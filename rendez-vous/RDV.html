@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html ng-app='calendarApp' ng-cloak='true'>
+<head>
+  <meta charset="UTF-8">
+  <title>RDV</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://code.angularjs.org/1.3.14/angular-animate.js'></script>
+<script src="index.js"></script>
+<script type="text/javascript"> 
+  function refresh(){
+      var t = 1000;
+      setTimeout('gettime()',t)
+  }
+  
+  function gettime() {
+      var date = new Date()
+      var h = date.getHours();
+      var m = date.getMinutes();
+      var s = date.getSeconds();
+      if( h < 10 ){ h = '0' + h; }
+      if( m < 10 ){ m = '0' + m; }
+      if( s < 10 ){ s = '0'  + s; }
+      var time = h + ':' + m + ':' + s
+      document.getElementById('tm').innerHTML = time;
+      refresh();
+   }
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
+<body onload="gettime()">
+  <div class="timeclo">
+    <span id="tm"></span>
+  </div>
+  <div class="sidebar">
+    
+    <div class="logo-details">
+      <span class="logo_name">Cabinet médical</span>
+      
+      <i class='bx bx-plus-medical'></i>
+    </div>
+      <ul class="nav-links">
+        <li class="rv">
+          <a href="#" class="active">
+            <span class="links_name">Rendez-vous</span>
+            <i class='bx bx-time-five'></i>
+          </a>
+        </li>
+        <li class="lp">
+          <a href="#">
+            <span class="links_name">Liste patients</span>
+            <i class='bx bx-list-ul' ></i>
+          </a>
+        </li>
+        <li class="dv">
+          <a href="#">
+            <span class="links_name">Devis </span>
+            <i class='bx bx-money'></i>
+          </a>
+        </li>
+        <li class="ord">
+          <a href="#">
+            <span class="links_name">ordonnance</span>
+            <i class='bx bx-bookmark-alt-minus'></i>
+          </a>
+        </li>
+      </ul>
+  </div>
+
+<div class='calendar' ng-controller='calendarController as calendar'>
+  <div class='calendar_left'>
+    <div class='header'>
+      <i class='material-icons' ng-click='calendar.prev()'>navigate_before</i>
+      <h1 class="month-value">{{calendar.month}}</h1>
+      <i class='material-icons' ng-click='calendar.next()'>navigate_next</i>
+    </div>
+    <div class='days'>
+      <div class='day_item'>Lun</div>
+      <div class='day_item'>Mar</div>
+      <div class='day_item'>Mer</div>
+      <div class='day_item'>Jeu</div>
+      <div class='day_item'>Ven</div>
+      <div class='day_item'>Sam</div>
+      <div class='day_item'>Dim</div>
+    </div>
+    <div class='dates'></div>
+  </div>
+  <div class='calendar_right'>
+      <h3>X</h3>
+    <div class='list'>
+      <ul>
+        <li class='bounce-in' ng-repeat='events in calendar.events' ng-show='events.id === calendar.dataId'>
+          <span class='nbr'> {{ events.progresss }} <span class='description'>
+          <span class='description'>{{ events.nom }}, {{events.horaires}}</span>
+          <span class="updateValue"><i class="fa-solid fa-pencil"></i></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class='calendar_left_2'>
+    <h3>X</h3>
+  <form ng-submit='calendar.add()'>
+    <input ng-model='calendar.nom' name="nom" placeholder='Nom' type='text'>
+    <input  ng-model='calendar.prenom' name="Prenom" placeholder='Prenom' type='text'>
+    <input  ng-model='calendar.tele' name="tele" placeholder='Numero Telepone' thype='text'>
+    <i id="time"class='bx bx-time-five'></i>
+    <select ng-model='calendar.horaires' id="heure">
+      <option value="9h - 10h">9h - 10h</option>
+      <option value="10h - 11h">10h - 11h</option>
+      <option value="11h - 12h">11h - 12h</option>
+      <option value="14h - 15h">14h - 15h</option>
+      <option value="15h - 16h">15h - 16h</option>
+      <option value="16h - 17h">16h - 17h</option>
+      <option value="17h - 18h">17h - 18h</option>  
+      <option value="18h - 19h">18h - 19h</option>
+      </select> 
+      <button class="valider">valider</button>
+  </form>
+</div>
+</div>
+
+
+
+
+</body>
+</html>
